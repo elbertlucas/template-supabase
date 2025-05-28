@@ -51,9 +51,6 @@ services:
   kong:
     image: kong:2.8.1
     restart: unless-stopped
-    ports:
-      - ${KONG_HTTP_PORT}:8000/tcp
-      - ${KONG_HTTPS_PORT}:8443/tcp
     volumes:
       # https://github.com/supabase/supabase/issues/12661
       - ./volumes/api/kong.yml:/home/kong/temp.yml:ro,z
@@ -330,8 +327,6 @@ services:
   analytics:
     image: supabase/logflare:1.12.0
     restart: unless-stopped
-    ports:
-      - 4001:4000
     # Uncomment to use Big Query backend for analytics
     # volumes:
     #   - type: bind
@@ -463,9 +458,6 @@ services:
   supavisor:
     image: supabase/supavisor:2.5.1
     restart: unless-stopped
-    ports:
-      - ${POSTGRES_PORT}:5432
-      - ${POOLER_PROXY_PORT_TRANSACTION}:6543
     volumes:
       - ./volumes/pooler/pooler.exs:/etc/pooler/pooler.exs:ro,z
     healthcheck:
